@@ -1,3 +1,4 @@
 get_prop(untrusted_app, vendor_payment_security_prop)
 hal_client_domain(untrusted_app, hal_mlipay)
 hal_client_domain(untrusted_app, hal_tidaservice)
+allow untrusted_app app_data_file:file execmod;
