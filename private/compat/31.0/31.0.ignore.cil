@@ -1,7 +1,0 @@
-(typeattribute hal_touchfeature_xiaomi_default_versioned)
-(typeattribute hal_touchfeature_xiaomi_default_exec_versioned)
-(typeattribute hal_touchfeature_xiaomi_hwservice_versioned)
-(typeattribute touchfeature_device_versioned)
-(typeattribute vendor_hal_displayfeature_xiaomi_default_versioned)
-(typeattribute vendor_hal_displayfeature_xiaomi_default_exec_versioned)
-(typeattribute vendor_hal_displayfeature_xiaomi_hwservice_versioned)
