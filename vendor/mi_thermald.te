@@ -187,5 +187,4 @@ allow vendor_hal_perf_default mi_thermald:dir { ioctl read getattr lock open wat
 allow vendor_hal_perf_default mi_thermald:file { ioctl read getattr lock map open watch watch_reads };
 
 # Additional permissions
-allow mi_thermald heapprofd_tmpfs:file { read write getattr map };
 allow mi_thermald mi_thermald_exec:file { read getattr map execute open entrypoint };
