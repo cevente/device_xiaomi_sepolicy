@@ -166,10 +166,6 @@ allow heapprofd mi_thermald:fd { use };
 allow heapprofd mi_thermald:process { signal };
 allow mi_thermald heapprofd:fd { use };
 
-allow uprobestats mi_thermald:dir { ioctl read getattr lock open watch watch_reads search };
-allow uprobestats mi_thermald:file { ioctl read getattr lock map open watch watch_reads };
-allow uprobestats mi_thermald:lnk_file { ioctl read getattr lock map open watch watch_reads };
-
 allow ueventd mi_thermald_exec:file { ioctl read getattr lock map open watch watch_reads };
 allow ueventd mi_thermald_exec:dir { ioctl read getattr lock open watch watch_reads search };
 allow ueventd mi_thermald_exec:lnk_file { ioctl read getattr lock map open watch watch_reads };
