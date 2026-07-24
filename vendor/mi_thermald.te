@@ -1,7 +1,7 @@
 # mi_thermald.te - Thermal Daemon SELinux Policy
 
-type mi_thermald_exec, { file_type exec_type vendor_file_type };
-type mi_thermald, { domain mlstrustedsubject };
+type mi_thermald_exec { file_type exec_type vendor_file_type };
+type mi_thermald { domain mlstrustedsubject };
 
 # File system permissions
 allow mi_thermald sysfs:dir { ioctl read getattr lock open watch watch_reads search };
@@ -122,6 +122,7 @@ allow init:mi_thermald:process { transition siginh rlimitinh };
 dontaudit init:mi_thermald:process { noatsecure };
 type_transition init mi_thermald_exec:process mi_thermald;
 
+allow mi_thermald init:unix_stream_socket { connectto };
 allow mi_thermald init:mi_thermald_exec:file { read getattr map execute open };
 allow mi_thermald netutils_wrapper:process { transition siginh rlimitinh };
 dontaudit mi_thermald netutils_wrapper:process { noatsecure };
@@ -195,5 +196,5 @@ allow vendor_hal_perf_default:mi_thermald:dir { ioctl read getattr lock open wat
 allow vendor_hal_perf_default:mi_thermald:file { ioctl read getattr lock map open watch watch_reads };
 
 # Additional permissions
-allow mi_thermald:heapprofd_tmpfs:file { read write getattr map };
-allow mi_thermald:mi_thermald_exec:file { read getattr map execute open entrypoint };
+allow mi_thermald heapprofd_tmpfs:file { read write getattr map };
+allow mi_thermald mi_thermald_exec:file { read getattr map execute open entrypoint };
