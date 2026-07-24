@@ -109,8 +109,6 @@ allow mi_thermald priv_app:dir { search };
 allow mi_thermald priv_app:file { read getattr open };
 allow mi_thermald system_server:dir { search };
 allow mi_thermald system_server:file { read getattr open };
-allow mi_thermald permissioncontroller_app:dir { search };
-allow mi_thermald permissioncontroller_app:file { read getattr open };
 allow mi_thermald untrusted_app:dir { search };
 allow mi_thermald untrusted_app:file { read getattr open };
 allow mi_thermald untrusted_app_27:dir { search };
@@ -122,7 +120,7 @@ dontaudit init mi_thermald:process { noatsecure };
 type_transition init mi_thermald_exec:process mi_thermald;
 
 allow mi_thermald init:unix_stream_socket { connectto };
-allow mi_thermald { init mi_thermald_exec }:file { read getattr map execute open };
+allow mi_thermald mi_thermald_exec:file { read getattr map execute open };
 allow mi_thermald netutils_wrapper:process { transition siginh rlimitinh };
 dontaudit mi_thermald netutils_wrapper:process { noatsecure };
 type_transition mi_thermald netutils_wrapper_exec:process netutils_wrapper;
@@ -138,7 +136,6 @@ allow mi_thermald vendor_data_file:dir { read write setattr watch add_name remov
 allow mi_thermald vendor_data_file:file { read write create getattr setattr append unlink rename open };
 allow mi_thermald vendor_thermal_data_file:dir { read write watch add_name remove_name search };
 allow mi_thermald vendor_thermal_data_file:file { read write create getattr setattr unlink rename open };
-allow mi_thermald system_file:file { read getattr map open };
 allow mi_thermald same_process_hal_file:file { read getattr map execute open };
 
 # Executable permissions
