@@ -1,7 +1,7 @@
 # mi_thermald.te - Thermal Daemon SELinux Policy
 
-type mi_thermald_exec { file_type exec_type vendor_file_type };
-type mi_thermald { domain mlstrustedsubject };
+type mi_thermald_exec, file_type, exec_type, vendor_file_type;
+type mi_thermald, domain, mlstrustedsubject;
 
 # File system permissions
 allow mi_thermald sysfs:dir { ioctl read getattr lock open watch watch_reads search };
@@ -118,12 +118,12 @@ allow mi_thermald untrusted_app_27:dir { search };
 allow mi_thermald untrusted_app_27:file { read getattr open };
 
 # Init and domain transitions
-allow init:mi_thermald:process { transition siginh rlimitinh };
-dontaudit init:mi_thermald:process { noatsecure };
+allow init mi_thermald:process { transition siginh rlimitinh };
+dontaudit init mi_thermald:process { noatsecure };
 type_transition init mi_thermald_exec:process mi_thermald;
 
 allow mi_thermald init:unix_stream_socket { connectto };
-allow mi_thermald init:mi_thermald_exec:file { read getattr map execute open };
+allow mi_thermald { init mi_thermald_exec }:file { read getattr map execute open };
 allow mi_thermald netutils_wrapper:process { transition siginh rlimitinh };
 dontaudit mi_thermald netutils_wrapper:process { noatsecure };
 type_transition mi_thermald netutils_wrapper_exec:process netutils_wrapper;
@@ -160,40 +160,40 @@ allow mi_thermald proc:file { read write getattr open };
 allow mi_thermald proc_cmdline:file { read getattr open };
 
 # Other process interactions
-allow traced_perf:mi_thermald:fd { use };
-allow traced_perf:mi_thermald:dir { ioctl read getattr lock open watch watch_reads search };
-allow traced_perf:mi_thermald:file { ioctl read getattr lock map open watch watch_reads };
-allow traced_perf:mi_thermald:process { signal };
+allow traced_perf mi_thermald:fd { use };
+allow traced_perf mi_thermald:dir { ioctl read getattr lock open watch watch_reads search };
+allow traced_perf mi_thermald:file { ioctl read getattr lock map open watch watch_reads };
+allow traced_perf mi_thermald:process { signal };
 
-allow heapprofd:mi_thermald:dir { ioctl read getattr lock open watch watch_reads search };
-allow heapprofd:mi_thermald:file { ioctl read write getattr lock append map open watch watch_reads };
-allow heapprofd:mi_thermald:fd { use };
-allow heapprofd:mi_thermald:process { signal };
-allow mi_thermald:heapprofd:fd { use };
+allow heapprofd mi_thermald:dir { ioctl read getattr lock open watch watch_reads search };
+allow heapprofd mi_thermald:file { ioctl read write getattr lock append map open watch watch_reads };
+allow heapprofd mi_thermald:fd { use };
+allow heapprofd mi_thermald:process { signal };
+allow mi_thermald heapprofd:fd { use };
 
-allow uprobestats:mi_thermald:dir { ioctl read getattr lock open watch watch_reads search };
-allow uprobestats:mi_thermald:file { ioctl read getattr lock map open watch watch_reads };
-allow uprobestats:mi_thermald:lnk_file { ioctl read getattr lock map open watch watch_reads };
+allow uprobestats mi_thermald:dir { ioctl read getattr lock open watch watch_reads search };
+allow uprobestats mi_thermald:file { ioctl read getattr lock map open watch watch_reads };
+allow uprobestats mi_thermald:lnk_file { ioctl read getattr lock map open watch watch_reads };
 
-allow ueventd:mi_thermald_exec:file { ioctl read getattr lock map open watch watch_reads };
-allow ueventd:mi_thermald_exec:dir { ioctl read getattr lock open watch watch_reads search };
-allow ueventd:mi_thermald_exec:lnk_file { ioctl read getattr lock map open watch watch_reads };
+allow ueventd mi_thermald_exec:file { ioctl read getattr lock map open watch watch_reads };
+allow ueventd mi_thermald_exec:dir { ioctl read getattr lock open watch watch_reads search };
+allow ueventd mi_thermald_exec:lnk_file { ioctl read getattr lock map open watch watch_reads };
 
-allow system_server:mi_thermald:fifo_file { write };
-allow system_server:mi_thermald:fd { use };
-allow system_suspend_server:mi_thermald:fd { use };
-allow netutils_wrapper:mi_thermald:process { sigchld };
-allow crash_dump:mi_thermald:process { sigchld sigkill sigstop signal ptrace };
+allow system_server mi_thermald:fifo_file { write };
+allow system_server mi_thermald:fd { use };
+allow system_suspend_server mi_thermald:fd { use };
+allow netutils_wrapper mi_thermald:process { sigchld };
+allow crash_dump mi_thermald:process { sigchld sigkill sigstop signal ptrace };
 
 # Dontaudit rules
-dontaudit init:mi_thermald:process { noatsecure };
-dontaudit mi_thermald:zygote:unix_dgram_socket { getopt };
-dontaudit mi_thermald:netutils_wrapper:process { noatsecure };
-dontaudit vendor_hal_perf_default:mi_thermald:process { getsched setsched };
+dontaudit init mi_thermald:process { noatsecure };
+dontaudit mi_thermald zygote:unix_dgram_socket { getopt };
+dontaudit mi_thermald netutils_wrapper:process { noatsecure };
+dontaudit vendor_hal_perf_default mi_thermald:process { getsched setsched };
 
 # Vendor HAL permissions
-allow vendor_hal_perf_default:mi_thermald:dir { ioctl read getattr lock open watch watch_reads search };
-allow vendor_hal_perf_default:mi_thermald:file { ioctl read getattr lock map open watch watch_reads };
+allow vendor_hal_perf_default mi_thermald:dir { ioctl read getattr lock open watch watch_reads search };
+allow vendor_hal_perf_default mi_thermald:file { ioctl read getattr lock map open watch watch_reads };
 
 # Additional permissions
 allow mi_thermald heapprofd_tmpfs:file { read write getattr map };
