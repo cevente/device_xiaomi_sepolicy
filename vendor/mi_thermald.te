@@ -66,7 +66,7 @@ allow mi_thermald mi_thermald:fd { use };
 allow mi_thermald mi_thermald:process { fork sigchld sigkill sigstop signull signal getsched setsched getsession getpgid setpgid getcap setcap getattr setrlimit };
 allow mi_thermald mi_thermald:unix_stream_socket { ioctl read write create getattr setattr lock append map bind connect listen accept getopt setopt shutdown connectto };
 allow mi_thermald mi_thermald:unix_dgram_socket { ioctl read write create getattr setattr lock append map bind connect getopt setopt shutdown sendto };
-allow mi_thermald mi_thermald:capability { chown dac_override dac_read_search fowner fsetid sys_ptrace sys_admin sys_boot };
+allow mi_thermald mi_thermald:capability { chown fowner fsetid sys_admin sys_boot };
 allow mi_thermald mi_thermald:capability2 { wake_alarm block_suspend };
 allow mi_thermald mi_thermald:cap2_userns { block_suspend };
 allow mi_thermald mi_thermald:lockdown { integrity confidentiality };
@@ -74,7 +74,7 @@ allow mi_thermald mi_thermald:lockdown { integrity confidentiality };
 # Binder and IPC permissions
 allow mi_thermald binder_device:chr_file { ioctl read write getattr lock append map open watch watch_reads };
 allow mi_thermald hwbinder_device:chr_file { ioctl read write getattr lock append map open watch watch_reads };
-allow mi_thermald vndbinder_device:chr_file { ioctl read write create getattr setattr lock relabelfrom relabelto append map unlink link rename execute quotaon mounton audit_access open execmod watch watch_mount watch_sb watch_with_perm watch_reads execute_no_trans entrypoint };
+allow mi_thermald vndbinder_device:chr_file { ioctl read write getattr map open };
 allow mi_thermald servicemanager:binder { call transfer };
 allow mi_thermald hwservicemanager:binder { call transfer };
 allow mi_thermald vndservicemanager:binder { transfer };
@@ -86,7 +86,6 @@ allow mi_thermald hwservicemanager_prop:file { read getattr map open };
 # Service manager permissions
 allow mi_thermald window_service:service_manager { find };
 allow mi_thermald hidl_manager_hwservice:hwservice_manager { find };
-allow mi_thermald binder_stats_consumer_service:service_manager { find };
 allow mi_thermald activity_service:service_manager { find };
 allow mi_thermald hal_system_suspend_service:service_manager { find };
 allow mi_thermald system_suspend_hwservice:hwservice_manager { find };
@@ -139,7 +138,7 @@ allow mi_thermald vendor_data_file:dir { read write setattr watch add_name remov
 allow mi_thermald vendor_data_file:file { read write create getattr setattr append unlink rename open };
 allow mi_thermald vendor_thermal_data_file:dir { read write watch add_name remove_name search };
 allow mi_thermald vendor_thermal_data_file:file { read write create getattr setattr unlink rename open };
-allow mi_thermald system_file:file { ioctl read write create getattr setattr lock relabelfrom relabelto append map unlink link rename execute quotaon mounton audit_access open execmod watch watch_mount watch_sb watch_with_perm watch_reads execute_no_trans entrypoint };
+allow mi_thermald system_file:file { read getattr map open };
 allow mi_thermald same_process_hal_file:file { read getattr map execute open };
 
 # Executable permissions
@@ -149,7 +148,6 @@ allow mi_thermald netutils_wrapper_exec:file { read getattr map execute open };
 allow mi_thermald mi_thermald_exec:file { read getattr map execute open entrypoint };
 
 # Property permissions
-allow mi_thermald default_prop:file { read };
 allow mi_thermald vendor_default_prop:file { read getattr map open };
 allow mi_thermald vendor_thermal_normal_prop:property_service { set };
 allow mi_thermald vendor_thermal_normal_prop:file { read getattr map open };
