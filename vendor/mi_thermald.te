@@ -181,7 +181,6 @@ allow crash_dump mi_thermald:process { sigchld sigkill sigstop signal ptrace };
 dontaudit init mi_thermald:process { noatsecure };
 dontaudit mi_thermald zygote:unix_dgram_socket { getopt };
 dontaudit mi_thermald netutils_wrapper:process { noatsecure };
-dontaudit vendor_hal_perf_default mi_thermald:process { getsched setsched };
 
 # Vendor HAL permissions
 allow vendor_hal_perf_default mi_thermald:dir { ioctl read getattr lock open watch watch_reads search };
