@@ -67,7 +67,7 @@ allow mi_thermald mi_thermald:process { fork sigchld sigkill sigstop signull sig
 allow mi_thermald mi_thermald:unix_stream_socket { ioctl read write create getattr setattr lock append map bind connect listen accept getopt setopt shutdown connectto };
 allow mi_thermald mi_thermald:unix_dgram_socket { ioctl read write create getattr setattr lock append map bind connect getopt setopt shutdown sendto };
 allow mi_thermald mi_thermald:capability { chown fowner fsetid sys_admin sys_boot };
-# dontaudit mi_thermald mi_thermald:capability sys_ptrace;
+dontaudit mi_thermald mi_thermald:capability sys_ptrace;
 allow mi_thermald mi_thermald:capability2 { wake_alarm block_suspend };
 allow mi_thermald mi_thermald:cap2_userns { block_suspend };
 allow mi_thermald mi_thermald:lockdown { integrity confidentiality };
@@ -116,13 +116,14 @@ allow mi_thermald untrusted_app_27:dir { search };
 allow mi_thermald untrusted_app_27:file { read getattr open };
 
 # Init and domain transitions
+allow init mi_thermald:process { transition siginh rlimitinh };
+dontaudit init mi_thermald:process { noatsecure };
 type_transition init mi_thermald_exec:process mi_thermald;
-allow init mi_thermald_exec:file { execute getattr map open read };
-allow init mi_thermald:process { rlimitinh siginh transition noatsecure };
 
 allow mi_thermald init:unix_stream_socket { connectto };
 allow mi_thermald mi_thermald_exec:file { read getattr map execute open };
 allow mi_thermald netutils_wrapper:process { transition siginh rlimitinh };
+dontaudit mi_thermald netutils_wrapper:process { noatsecure };
 type_transition mi_thermald netutils_wrapper_exec:process netutils_wrapper;
 
 type_transition mi_thermald crash_dump_exec:process crash_dump;
@@ -176,9 +177,10 @@ allow system_suspend_server mi_thermald:fd { use };
 allow netutils_wrapper mi_thermald:process { sigchld };
 allow crash_dump mi_thermald:process { sigchld sigkill sigstop signal ptrace };
 
-# device/<vendor>/<device>/sepolicy/private/mi_thermald.te
-allow mi_thermald netutils_wrapper:process noatsecure;
-allow mi_thermald zygote:unix_dgram_socket getopt;
+# Dontaudit rules
+dontaudit init mi_thermald:process { noatsecure };
+dontaudit mi_thermald zygote:unix_dgram_socket { getopt };
+dontaudit mi_thermald netutils_wrapper:process { noatsecure };
 
 # Vendor HAL permissions
 allow vendor_hal_perf_default mi_thermald:dir { ioctl read getattr lock open watch watch_reads search };
@@ -186,9 +188,3 @@ allow vendor_hal_perf_default mi_thermald:file { ioctl read getattr lock map ope
 
 # Additional permissions
 allow mi_thermald mi_thermald_exec:file { read getattr map execute open entrypoint };
-
-
-# For specific process tracing
-allow mi_thermald zygote:process ptrace;
-allow mi_thermald system_server:process ptrace;
-allow mi_thermald netutils_wrapper:process ptrace;
