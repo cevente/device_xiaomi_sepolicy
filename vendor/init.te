@@ -38,4 +38,3 @@ set_prop(vendor_init, vendor_touchfeature_prop)
 # Thermal
 allow init mi_thermald_exec:file { execute getattr map open read };
 allow init mi_thermald:process { rlimitinh siginh transition };
-allow init mi_thermald:process noatsecure;
