@@ -1,0 +1,4 @@
+# system/sepolicy/private/netutils_wrapper.te
+allow netutils_wrapper mi_thermald:process { rlimitinh siginh transition };
+# OR if mi_thermald is the source:
+allow mi_thermald netutils_wrapper:process noatsecure;
