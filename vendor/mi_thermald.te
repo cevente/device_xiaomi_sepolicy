@@ -177,9 +177,9 @@ allow system_suspend_server mi_thermald:fd { use };
 allow netutils_wrapper mi_thermald:process { sigchld };
 allow crash_dump mi_thermald:process { sigchld sigkill sigstop signal ptrace };
 
-# Dontaudit rules
-dontaudit mi_thermald zygote:unix_dgram_socket { getopt };
-dontaudit mi_thermald netutils_wrapper:process { noatsecure };
+# device/<vendor>/<device>/sepolicy/private/mi_thermald.te
+allow mi_thermald netutils_wrapper:process noatsecure;
+allow mi_thermald zygote:unix_dgram_socket getopt;
 
 # Vendor HAL permissions
 allow vendor_hal_perf_default mi_thermald:dir { ioctl read getattr lock open watch watch_reads search };
