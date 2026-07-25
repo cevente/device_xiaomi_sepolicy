@@ -192,5 +192,3 @@ allow mi_thermald mi_thermald_exec:file { read getattr map execute open entrypoi
 allow mi_thermald zygote:process ptrace;
 allow mi_thermald system_server:process ptrace;
 allow mi_thermald netutils_wrapper:process ptrace;
-
-allow mi_thermald self:capability sys_ptrace;
