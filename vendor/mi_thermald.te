@@ -116,9 +116,9 @@ allow mi_thermald untrusted_app_27:dir { search };
 allow mi_thermald untrusted_app_27:file { read getattr open };
 
 # Init and domain transitions
-allow init mi_thermald:process { transition siginh rlimitinh };
-dontaudit init mi_thermald:process { noatsecure };
 type_transition init mi_thermald_exec:process mi_thermald;
+allow init mi_thermald_exec:file { execute getattr map open read };
+allow init mi_thermald:process { rlimitinh siginh transition noatsecure };
 
 allow mi_thermald init:unix_stream_socket { connectto };
 allow mi_thermald mi_thermald_exec:file { read getattr map execute open };
@@ -178,7 +178,6 @@ allow netutils_wrapper mi_thermald:process { sigchld };
 allow crash_dump mi_thermald:process { sigchld sigkill sigstop signal ptrace };
 
 # Dontaudit rules
-dontaudit init mi_thermald:process { noatsecure };
 dontaudit mi_thermald zygote:unix_dgram_socket { getopt };
 dontaudit mi_thermald netutils_wrapper:process { noatsecure };
 
