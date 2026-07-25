@@ -123,7 +123,6 @@ allow init mi_thermald:process { rlimitinh siginh transition noatsecure };
 allow mi_thermald init:unix_stream_socket { connectto };
 allow mi_thermald mi_thermald_exec:file { read getattr map execute open };
 allow mi_thermald netutils_wrapper:process { transition siginh rlimitinh };
-dontaudit mi_thermald netutils_wrapper:process { noatsecure };
 type_transition mi_thermald netutils_wrapper_exec:process netutils_wrapper;
 
 type_transition mi_thermald crash_dump_exec:process crash_dump;
