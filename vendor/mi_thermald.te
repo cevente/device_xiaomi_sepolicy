@@ -67,7 +67,7 @@ allow mi_thermald mi_thermald:process { fork sigchld sigkill sigstop signull sig
 allow mi_thermald mi_thermald:unix_stream_socket { ioctl read write create getattr setattr lock append map bind connect listen accept getopt setopt shutdown connectto };
 allow mi_thermald mi_thermald:unix_dgram_socket { ioctl read write create getattr setattr lock append map bind connect getopt setopt shutdown sendto };
 allow mi_thermald mi_thermald:capability { chown fowner fsetid sys_admin sys_boot };
-dontaudit mi_thermald mi_thermald:capability sys_ptrace;
+# dontaudit mi_thermald mi_thermald:capability sys_ptrace;
 allow mi_thermald mi_thermald:capability2 { wake_alarm block_suspend };
 allow mi_thermald mi_thermald:cap2_userns { block_suspend };
 allow mi_thermald mi_thermald:lockdown { integrity confidentiality };
@@ -186,3 +186,11 @@ allow vendor_hal_perf_default mi_thermald:file { ioctl read getattr lock map ope
 
 # Additional permissions
 allow mi_thermald mi_thermald_exec:file { read getattr map execute open entrypoint };
+
+
+# For specific process tracing
+allow mi_thermald zygote:process ptrace;
+allow mi_thermald system_server:process ptrace;
+allow mi_thermald netutils_wrapper:process ptrace;
+
+allow mi_thermald self:capability sys_ptrace;
