@@ -1,2 +1,0 @@
-# system/sepolicy/public/zygote.te
-type zygote, domain;
