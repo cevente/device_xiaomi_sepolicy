@@ -87,6 +87,3 @@ allow system_app ufs_sysfs:file { getattr open read };
 
 # Vibrator
 allow system_app hal_vibrator_default:binder call;
-
-# Allow Settings app to setprop for axion screen off fod
-allow system_app vendor_fp_prop:property_service set;
