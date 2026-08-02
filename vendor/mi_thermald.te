@@ -3,6 +3,10 @@
 type mi_thermald_exec, file_type, exec_type, vendor_file_type;
 type mi_thermald, domain, mlstrustedsubject;
 
+# transition
+type mi_thermald_exec, exec_type, file_type;
+domain_auto_trans(init, mi_thermald_exec, mi_thermald);
+
 # File system permissions
 allow mi_thermald sysfs:dir { ioctl read getattr lock open watch watch_reads search };
 allow mi_thermald sysfs:file { ioctl read write getattr lock append map open watch watch_reads };
