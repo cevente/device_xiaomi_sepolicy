@@ -7,8 +7,5 @@ set_prop(vendor_init, vendor_nfc_prop)
 # Allow vendor_init to set thermal prop
 set_prop(vendor_init, vendor_thermal_normal_prop)
 
-allow vendor_init default_prop:file { read };
-allow vendor_init tombstone_data_file:dir { search }; 
-
 set_prop(vendor_init, vendor_apk_verity_prop)
 set_prop(vendor_init, vendor_media_prop)
