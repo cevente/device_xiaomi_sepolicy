@@ -142,6 +142,6 @@ ro.vendor.touchfeature.type                     u:object_r:vendor_touchfeature_p
 vendor.panel                                   u:object_r:vendor_panel_info_prop:s0
 vendor.touchfeature                            u:object_r:vendor_touchfeature_prop:s0
 
-ro.vendor.apk_verity.mode          u:object_r:vendor_default_prop:s0
-persist.vendor.mm.enable.prefetch  u:object_r:vendor_default_prop:s0
-ro.vendor.mediaserver.64b.enable   u:object_r:vendor_default_prop:s0
+ro.vendor.apk_verity.mode          u:object_r:vendor_apk_verity_prop:s0
+persist.vendor.mm.enable.prefetch  u:object_r:vendor_media_prop:s0
+ro.vendor.mediaserver.64b.enable   u:object_r:vendor_media_prop:s0
