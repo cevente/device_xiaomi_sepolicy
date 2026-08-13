@@ -191,3 +191,10 @@ allow vendor_hal_perf_default mi_thermald:file { ioctl read getattr lock map ope
 
 # Additional permissions
 allow mi_thermald mi_thermald_exec:file { read getattr map execute open entrypoint };
+
+allow mi_thermald self:capability { 
+    chown 
+    fowner 
+    fsetid 
+    sys_boot 
+};
